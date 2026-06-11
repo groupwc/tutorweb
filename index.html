@@ -11,31 +11,14 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-
-    <!-- Navigation -->
-    <nav class="navbar">
-        <a href="index.html" class="nav-logo">
-            <svg class="svg-icon text-navy logo-icon" viewBox="0 0 24 24"><path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/></svg>
-            Tutor P
-        </a>
-        <div class="hamburger">
-            <span></span><span></span><span></span>
-        </div>
-        <div class="nav-links">
-            <a href="index.html" class="active">หน้าหลัก</a>
-            <a href="about.html">รู้จักผู้สอน</a>
-            <a href="courses.html">คอร์สและราคา</a>
-            <a href="booking.html" class="btn btn-primary nav-btn">จองคลาสทดลอง</a>
-        </div>
-    </nav>
+<body data-page="home">
 
     <!-- Hero Section -->
     <header class="hero">
         <div class="hero-container fade-in">
             <!-- Left: Text -->
             <div class="hero-text">
-                <h1>พิชิต IELTS Band 6.5 <br>กับโค้ชที่ลงสนามสอบจริง 13 ครั้ง</h1>
+                <h1>พิชิต IELTS <span class="gradient-text">Band 6.5</span> <br>กับโค้ชที่ลงสนามสอบจริง 13 ครั้ง</h1>
                 <p>ไม่ใช่แค่รู้ทฤษฎี แต่เข้าใจความรู้สึกในห้องสอบจริง สัตวแพทย์จุฬาฯ ว่าที่ ป.โท UK <br>ที่จะย่อยเรื่องยากให้เข้าใจง่าย และพาคุณไปให้ถึงเป้าหมาย</p>
                 <div class="hero-buttons">
                     <a href="booking.html" class="btn btn-primary">จองคลาสทดลอง</a>
@@ -47,23 +30,56 @@
                     <span><svg class="svg-icon text-green" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg> ดูแลใกล้ชิด 1-on-1</span>
                 </div>
             </div>
-            
-            <!-- Right: Video/Media -->
+
+            <!-- Right: Coach photo -->
             <div class="hero-media fade-in delay-1">
-                <div class="video-wrapper">
-                    <!-- Custom Thumbnail with Play Button -->
-                    <a href="https://www.youtube.com/watch?v=r5eiUU3EpHE" target="_blank" class="video-thumbnail-link">
-                        <!-- Try maxresdefault first, fallback to hqdefault -->
-                        <img src="https://img.youtube.com/vi/r5eiUU3EpHE/maxresdefault.jpg" alt="คลิปแนะนำ Tutor P" onerror="this.onerror=null; this.src='https://img.youtube.com/vi/r5eiUU3EpHE/hqdefault.jpg';">
-                        <div class="play-button">▶</div>
-                    </a>
+                <div class="hero-photo">
+                    <img src="images/tutor_1.png" alt="โค้ช Tutor P — สัตวแพทย์จุฬาฯ ว่าที่ ป.โท UK">
+                    <div class="hero-photo-badge"><svg class="svg-icon text-green"><use href="#ic-check"></use></svg> สอบจริง 13 ครั้ง</div>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Mini About Section -->
+    <!-- Stats / Credibility Band -->
+    <section class="stats-band">
+        <div class="stats-inner">
+            <div class="stat-item fade-in">
+                <div class="stat-number" data-count="13">13</div>
+                <div class="stat-label">สนามสอบจริง (ครั้ง)</div>
+            </div>
+            <div class="stat-item fade-in delay-1">
+                <div class="stat-number">6.0–6.5</div>
+                <div class="stat-label">เป้าหมายที่เชี่ยวชาญ</div>
+            </div>
+            <div class="stat-item fade-in delay-2">
+                <div class="stat-number">1-on-1</div>
+                <div class="stat-label">ดูแลใกล้ชิดรายคน</div>
+            </div>
+            <div class="stat-item fade-in delay-3">
+                <div class="stat-number" data-count="9">9</div>
+                <div class="stat-label">รับจำกัด (ชม./สัปดาห์)</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Intro / sample teaching videos -->
     <section class="section">
+        <div class="section-title fade-in">ดูตัวอย่างการสอน &amp; แนะนำตัว</div>
+        <div class="video-grid fade-in delay-1">
+            <div class="video-wrapper" data-yt="r5eiUU3EpHE" data-title="คลิปแนะนำ Tutor P" role="button" tabindex="0" aria-label="เล่นคลิปแนะนำ Tutor P">
+                <img src="https://img.youtube.com/vi/r5eiUU3EpHE/maxresdefault.jpg" alt="คลิปแนะนำ Tutor P" loading="lazy" onerror="this.onerror=null; this.src='https://img.youtube.com/vi/r5eiUU3EpHE/hqdefault.jpg';">
+                <div class="play-button">▶</div>
+            </div>
+            <div class="video-wrapper" data-yt="Tn7E2PNfASg" data-title="รีวิว/ตัวอย่างการสอน" role="button" tabindex="0" aria-label="เล่นคลิปที่สอง">
+                <img src="https://img.youtube.com/vi/Tn7E2PNfASg/maxresdefault.jpg" alt="คลิปที่สอง" loading="lazy" onerror="this.onerror=null; this.src='https://img.youtube.com/vi/Tn7E2PNfASg/hqdefault.jpg';">
+                <div class="play-button">▶</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mini About Section -->
+    <section class="section bg-white">
         <div class="grid">
             <div class="glass-card fade-in delay-1">
                 <h2>ทำไม "คนสอบ 13 ครั้ง" ถึงสอนคุณได้ดีกว่า?</h2>
@@ -77,24 +93,47 @@
                 <br>
                 <p>ด้วยพื้นฐาน <strong>ทักษะวิทยากรและพิธีกร</strong> เรื่องไวยากรณ์ที่เคยน่าปวดหัว จะถูกย่อยให้จับต้องได้ และสนุก เหมือนมีเพื่อนเก่งๆ นั่งติวให้ข้างๆ</p>
                 <br>
-                <a href="#pricing" class="accent-link">ดูคอร์สเรียนทั้งหมด &rarr;</a>
+                <a href="courses.html" class="accent-link">ดูคอร์สเรียนทั้งหมด &rarr;</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3 Value Pillars -->
+    <section class="section bg-white">
+        <div class="section-title fade-in">3 เหตุผลที่การเรียนกับเราต่างจากที่อื่น</div>
+        <div class="grid pillars">
+            <div class="pillar-card fade-in delay-1">
+                <div class="pillar-icon"><svg class="svg-icon"><use href="#ic-bulb"></use></svg></div>
+                <h3>ย่อยเรื่องยากให้ "อ๋อ" ในครั้งเดียว</h3>
+                <p>ด้วยทักษะระดับวิทยากร เราเปลี่ยนไวยากรณ์และเทคนิคที่ซับซ้อนให้เข้าใจง่ายและจำได้จริง ไม่ใช่ท่องจำแล้วลืม</p>
+            </div>
+            <div class="pillar-card fade-in delay-2">
+                <div class="pillar-icon"><svg class="svg-icon"><use href="#ic-heart"></use></svg></div>
+                <h3>เข้าใจ "คนสอบ" เพราะเคยสอบจริง 13 ครั้ง</h3>
+                <p>เรารู้ว่าความกดดันในห้องสอบเป็นยังไง รู้ว่าคุณมักพลาดตรงไหน และรู้วิธีปั้นคะแนนให้ถึงเป้าอย่างตรงจุด</p>
+            </div>
+            <div class="pillar-card fade-in delay-3">
+                <div class="pillar-icon"><svg class="svg-icon"><use href="#ic-globe"></use></svg></div>
+                <h3>แนะแนวเรียนต่อ UK จากประสบการณ์ตรง</h3>
+                <p>ในฐานะว่าที่นักศึกษา ป.โท ที่ UK เราให้คำแนะนำเรื่องการเตรียมตัว เกณฑ์คะแนน และชีวิตจริงได้มากกว่าแค่ติวสอบ</p>
             </div>
         </div>
     </section>
 
     <!-- Top 5 Reviews Section -->
     <section class="section section-reviews">
-        <div class="section-title fade-in">เสียงจากนักเรียนที่ไปถึงเป้าหมายแล้ว 🏆</div>
+        <div class="section-title fade-in">เสียงจากนักเรียนที่ไปถึงเป้าหมายแล้ว</div>
         <p class="section-intro section-intro--light fade-in delay-1">ผลลัพธ์จริงจากผู้เรียนที่ปลดล็อกคะแนนและทำตามความฝันได้สำเร็จ</p>
-        
+
         <div class="reviews-container fade-in delay-2">
-            <div class="review-scroll">
+            <button class="review-nav review-nav--prev" aria-label="รีวิวก่อนหน้า"><svg class="svg-icon"><use href="#ic-chevron-left"></use></svg></button>
+            <div class="review-scroll" id="reviewScroll">
                 <!-- Review 1 -->
                 <div class="review-card">
-                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <div class="stars"><svg class="svg-icon"><use href="#ic-star"></use></svg><svg class="svg-icon"><use href="#ic-star"></use></svg><svg class="svg-icon"><use href="#ic-star"></use></svg><svg class="svg-icon"><use href="#ic-star"></use></svg><svg class="svg-icon"><use href="#ic-star"></use></svg></div>
                     <p class="review-text">"อธิบายเข้าใจง่ายมาก จากที่ Writing ไม่เคยถึง 6 ตอนนี้ได้ 6.5 แล้วค่ะ พี่เขารู้จุดอ่อนเราจริงๆ"</p>
                     <div class="reviewer">
-                        <div class="reviewer-avatar avatar-blue">A</div>
+                        <div class="reviewer-avatar avatar-blue"><img src="images/student_a.png" alt="น้องเอ" loading="lazy" onerror="this.remove()"><span>A</span></div>
                         <div>
                             <strong>น้องเอ</strong>
                             <span class="reviewer-goal">สอบติด ป.ตรี อินเตอร์</span>
@@ -103,10 +142,10 @@
                 </div>
                 <!-- Review 2 -->
                 <div class="review-card">
-                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <div class="stars"><svg class="svg-icon"><use href="#ic-star"></use></svg><svg class="svg-icon"><use href="#ic-star"></use></svg><svg class="svg-icon"><use href="#ic-star"></use></svg><svg class="svg-icon"><use href="#ic-star"></use></svg><svg class="svg-icon"><use href="#ic-star"></use></svg></div>
                     <p class="review-text">"พี่ติวเตอร์เข้าใจเลยว่าเราพลาดตรงไหน ปรับแค่ไม่กี่จุดคะแนนขยับเลย ประหยัดเวลาไปได้เยอะมาก"</p>
                     <div class="reviewer">
-                        <div class="reviewer-avatar avatar-green">B</div>
+                        <div class="reviewer-avatar avatar-green"><img src="images/student_b.png" alt="คุณบี" loading="lazy" onerror="this.remove()"><span>B</span></div>
                         <div>
                             <strong>คุณบี</strong>
                             <span class="reviewer-goal">ย้ายไปทำงานต่างประเทศ</span>
@@ -115,10 +154,10 @@
                 </div>
                 <!-- Review 3 -->
                 <div class="review-card">
-                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <div class="stars"><svg class="svg-icon"><use href="#ic-star"></use></svg><svg class="svg-icon"><use href="#ic-star"></use></svg><svg class="svg-icon"><use href="#ic-star"></use></svg><svg class="svg-icon"><use href="#ic-star"></use></svg><svg class="svg-icon"><use href="#ic-star"></use></svg></div>
                     <p class="review-text">"ชอบที่ย่อยเรื่องยากๆ ให้ง่าย เหมือนมีเพื่อนเก่งๆ มานั่งสอนให้ฟัง ไม่เกร็งเลย คุ้มค่าทุกนาทีครับ"</p>
                     <div class="reviewer">
-                        <div class="reviewer-avatar avatar-amber">C</div>
+                        <div class="reviewer-avatar avatar-amber"><img src="images/student_c.png" alt="น้องซี" loading="lazy" onerror="this.remove()"><span>C</span></div>
                         <div>
                             <strong>น้องซี</strong>
                             <span class="reviewer-goal">Band 6.5 ใน 1 เดือน</span>
@@ -127,10 +166,10 @@
                 </div>
                 <!-- Review 4 -->
                 <div class="review-card">
-                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <div class="stars"><svg class="svg-icon"><use href="#ic-star"></use></svg><svg class="svg-icon"><use href="#ic-star"></use></svg><svg class="svg-icon"><use href="#ic-star"></use></svg><svg class="svg-icon"><use href="#ic-star"></use></svg><svg class="svg-icon"><use href="#ic-star"></use></svg></div>
                     <p class="review-text">"เคยสอบมาหลายรอบคะแนนไม่ขึ้น พอมาเรียนแล้วรู้ทริคในการดึงคะแนน Speaking ขึ้นมาได้ชัดเจนมาก"</p>
                     <div class="reviewer">
-                        <div class="reviewer-avatar avatar-pink">D</div>
+                        <div class="reviewer-avatar avatar-pink"><img src="images/student_d.png" alt="คุณดี" loading="lazy" onerror="this.remove()"><span>D</span></div>
                         <div>
                             <strong>คุณดี</strong>
                             <span class="reviewer-goal">เรียนต่อ ป.โท UK</span>
@@ -139,10 +178,10 @@
                 </div>
                 <!-- Review 5 -->
                 <div class="review-card">
-                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <div class="stars"><svg class="svg-icon"><use href="#ic-star"></use></svg><svg class="svg-icon"><use href="#ic-star"></use></svg><svg class="svg-icon"><use href="#ic-star"></use></svg><svg class="svg-icon"><use href="#ic-star"></use></svg><svg class="svg-icon"><use href="#ic-star"></use></svg></div>
                     <p class="review-text">"เนื้อหาตรงจุด ไม่น้ำเยอะ โค้ชใส่ใจรายละเอียดการเขียนมาก ตรวจละเอียดสุดๆ แนะนำเลยค่ะ"</p>
                     <div class="reviewer">
-                        <div class="reviewer-avatar avatar-purple">E</div>
+                        <div class="reviewer-avatar avatar-purple"><img src="images/student_e.png" alt="น้องอี" loading="lazy" onerror="this.remove()"><span>E</span></div>
                         <div>
                             <strong>น้องอี</strong>
                             <span class="reviewer-goal">อัปเกรดเงินเดือน</span>
@@ -150,10 +189,11 @@
                     </div>
                 </div>
             </div>
+            <button class="review-nav review-nav--next" aria-label="รีวิวถัดไป"><svg class="svg-icon"><use href="#ic-chevron-right"></use></svg></button>
         </div>
     </section>
 
-    <!-- Courses & Pricing Section (Added to Homepage) -->
+    <!-- Courses & Pricing Section -->
     <section id="pricing" class="section bg-white">
         <div class="section-title fade-in">เลือกเส้นทางสู่คะแนนเป้าหมายของคุณ</div>
         <p class="section-intro fade-in">ไม่ว่าคุณจะอยากได้โค้ชส่วนตัวแบบใกล้ชิด หรืออยากเรียนเองตามจังหวะของคุณ เรามีทางให้คุณไปถึงเป้าหมาย</p>
@@ -168,9 +208,10 @@
                 <h4 class="price-amount price-amount--green">฿600<span> / ชม.</span></h4>
 
                 <ul class="feature-list">
-                    <li>✅ สอนสดผ่าน Zoom ตัวต่อตัว 100%</li>
-                    <li>✅ วิเคราะห์จุดอ่อนรายบุคคล เจาะเป้า Band 6.0–6.5</li>
-                    <li>✅ ฟีดแบ็กละเอียดเป็นรายคน ไม่สอนแบบเหมารวม</li>
+                    <li><svg class="svg-icon text-green"><use href="#ic-check"></use></svg>สอนสดผ่าน Zoom ตัวต่อตัว 100%</li>
+                    <li><svg class="svg-icon text-green"><use href="#ic-check"></use></svg>วิเคราะห์จุดอ่อนรายบุคคล เจาะเป้า Band 6.0–6.5</li>
+                    <li><svg class="svg-icon text-green"><use href="#ic-check"></use></svg>ฟีดแบ็กละเอียดเป็นรายคน ไม่สอนแบบเหมารวม</li>
+                    <li class="limited"><svg class="svg-icon text-red"><use href="#ic-lock"></use></svg>รับจำนวนจำกัด 9 ชม./สัปดาห์</li>
                 </ul>
 
                 <a href="booking.html" class="btn btn-primary btn-block">จองคลาสทดลองตอนนี้</a>
@@ -184,10 +225,10 @@
                 <h4 class="price-amount">฿1,000+<span> / คอร์ส</span></h4>
 
                 <ul class="feature-list">
-                    <li>✅ วิดีโอคอร์สเจาะเฉพาะทักษะ (Writing, Speaking ฯลฯ)</li>
-                    <li>✅ ดูซ้ำได้ไม่จำกัด เรียนตามจังหวะของคุณเอง</li>
-                    <li>✅ เหมาะสำหรับเสริมคลาสสด หรือเริ่มต้นด้วยงบจำกัด</li>
-                    <li>✅ อัพเดทเทคนิคใหม่ๆ สม่ำเสมอ</li>
+                    <li><svg class="svg-icon text-green"><use href="#ic-check"></use></svg>วิดีโอคอร์สเจาะเฉพาะทักษะ (Writing, Speaking ฯลฯ)</li>
+                    <li><svg class="svg-icon text-green"><use href="#ic-check"></use></svg>ดูซ้ำได้ไม่จำกัด เรียนตามจังหวะของคุณเอง</li>
+                    <li><svg class="svg-icon text-green"><use href="#ic-check"></use></svg>เหมาะสำหรับเสริมคลาสสด หรือเริ่มต้นด้วยงบจำกัด</li>
+                    <li><svg class="svg-icon text-green"><use href="#ic-check"></use></svg>อัพเดทเทคนิคใหม่ๆ สม่ำเสมอ</li>
                 </ul>
 
                 <a href="booking.html" class="btn btn-secondary btn-block">สอบถามคอร์สวิดีโอ</a>
@@ -200,7 +241,7 @@
         <div class="fade-in">
             <h2>คะแนนที่คุณต้องการ อยู่ใกล้กว่าที่คิด</h2>
             <p>เริ่มต้นด้วยคลาสทดลอง แล้วมาดูกันว่าเราจะพาคุณไปถึง Band 6.5 ได้เร็วแค่ไหน</p>
-            <a href="booking.html" class="btn btn-primary btn-lg">🎯 จองคลาสทดลองตอนนี้</a>
+            <a href="booking.html" class="btn btn-primary btn-lg">จองคลาสทดลองตอนนี้</a>
         </div>
     </section>
 
@@ -230,59 +271,6 @@
             </div>
         </div>
     </section>
-
-    <!-- Footer / Contact Section -->
-    <footer class="footer">
-        <div class="footer-container">
-            <!-- Brand & Info -->
-            <div class="footer-brand">
-                <h3 class="footer-logo">
-                    <svg class="svg-icon logo-icon" viewBox="0 0 24 24"><path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/></svg>
-                    Tutor P
-                </h3>
-                <p class="footer-desc">ติว IELTS ตัวต่อตัว เจาะเป้า Band 6.0–6.5<br>ย่อยเรื่องยากให้เข้าใจง่าย <br>โดยสัตวแพทย์จุฬาฯ ว่าที่ ป.โท UK</p>
-            </div>
-
-            <!-- Contact Info -->
-            <div class="footer-contact">
-                <h4 class="footer-heading">ช่องทางการติดต่อ</h4>
-                <p>📞 โทรศัพท์: <a href="tel:#" class="contact-link">08X-XXX-XXXX</a></p>
-                <p>📧 อีเมล: <a href="mailto:#" class="contact-link">contact@yourdomain.com</a></p>
-                <p>💬 LINE: <a href="#" class="contact-link">@yourlineid</a></p>
-            </div>
-
-            <!-- Social Media -->
-            <div class="footer-social">
-                <h4 class="footer-heading">ติดตามเรา</h4>
-                <div class="social-icons">
-                    <!-- Facebook -->
-                    <a href="#" class="social-icon" title="Facebook">
-                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.312h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.323-1.325z"/></svg>
-                    </a>
-                    <!-- LINE -->
-                    <a href="#" class="social-icon" title="LINE">
-                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M24 10.304c0-5.369-5.383-9.738-12-9.738-6.616 0-12 4.369-12 9.738 0 4.814 4.269 8.846 10.036 9.608.391.084.922.258 1.057.592.122.303.079.778.039 1.085l-.171 1.027c-.053.303-.242 1.186 1.039.647 1.281-.54 6.911-4.069 9.428-6.967 1.739-1.907 2.572-3.843 2.572-5.992zm-18.988 2.595h-2.392v-4.782h1.078v3.911h1.314v.871zm3.841 0h-1.077v-4.782h1.077v4.782zm6.275 0h-1.315l-1.902-3.04v3.04h-1.078v-4.782h1.315l1.902 3.041v-3.041h1.078v4.782zm4.148 0h-2.392v-4.782h2.392v.871h-1.314v1.081h1.314v.871h-1.314v1.088h1.314v.871z"/></svg>
-                    </a>
-                    <!-- YouTube -->
-                    <a href="#" class="social-icon" title="YouTube">
-                        <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-                    </a>
-                    <!-- TikTok -->
-                    <a href="#" class="social-icon" title="TikTok">
-                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 Tutor P Coaching. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <!-- Floating LINE Button -->
-    <a href="https://line.me/R/ti/p/@YOUR_LINE_ID" target="_blank" class="floating-line-btn" title="Chat on LINE">
-        <svg width="28" height="28" fill="white" viewBox="0 0 24 24"><path d="M24 10.304c0-5.369-5.383-9.738-12-9.738-6.616 0-12 4.369-12 9.738 0 4.814 4.269 8.846 10.036 9.608.391.084.922.258 1.057.592.122.303.079.778.039 1.085l-.171 1.027c-.053.303-.242 1.186 1.039.647 1.281-.54 6.911-4.069 9.428-6.967 1.739-1.907 2.572-3.843 2.572-5.992zm-18.988 2.595h-2.392v-4.782h1.078v3.911h1.314v.871zm3.841 0h-1.077v-4.782h1.077v4.782zm6.275 0h-1.315l-1.902-3.04v3.04h-1.078v-4.782h1.315l1.902 3.041v-3.041h1.078v4.782zm4.148 0h-2.392v-4.782h2.392v.871h-1.314v1.081h1.314v.871h-1.314v1.088h1.314v.871z"/></svg>
-    </a>
 
     <script src="app.js"></script>
 </body>
