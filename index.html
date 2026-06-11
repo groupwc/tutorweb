@@ -249,16 +249,28 @@
                     <li class="limited"><svg class="svg-icon text-red"><use href="#ic-lock"></use></svg>รับจำนวนจำกัด 9 ชม./สัปดาห์</li>
                 </ul>
 
-                <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 15px;">
-                    <a href="booking.html" class="btn btn-primary btn-block">ลงทะเบียนเรียน</a>
-                    <button class="btn btn-secondary btn-block" id="btnVideoSample" style="display: flex; align-items: center; justify-content: center; gap: 8px;">
-                        <svg class="svg-icon"><use href="#ic-play"></use></svg> ดูสไตล์การสอน (1 นาที)
-                    </button>
-                </div>
+                <a href="booking.html" class="btn btn-primary btn-block">ลงทะเบียนเรียน</a>
             </div>
 
-            <!-- Card 2 -->
+            <!-- Card 2: Live Group -->
             <div class="glass-card fade-in delay-2 bg-light">
+                <h3 class="price-title">Live กลุ่มเล็ก</h3>
+                <p class="price-desc">ชวนเพื่อนที่สนใจมารวมกลุ่มกันเอง (ไม่เกิน 4 คน) เรียนสดไปด้วยกัน สนุกและช่วยกันหารค่าเรียน</p>
+
+                <h4 class="price-amount price-amount--green">฿1,000<span> / ชม. ต่อกลุ่ม</span></h4>
+
+                <ul class="feature-list">
+                    <li><svg class="svg-icon text-green"><use href="#ic-check"></use></svg>สอนสดผ่าน Zoom สำหรับกลุ่มที่คุณรวมมาเอง</li>
+                    <li><svg class="svg-icon text-navy"><use href="#ic-users"></use></svg>ชวนเพื่อนมารวมกลุ่มได้สูงสุด 4 คน/กลุ่ม</li>
+                    <li><svg class="svg-icon text-green"><use href="#ic-check"></use></svg>เหมาะกับกลุ่มเพื่อนที่พื้นฐานภาษาใกล้เคียงกัน เรียนไปพร้อมกัน</li>
+                    <li><svg class="svg-icon text-green"><use href="#ic-check"></use></svg>หารค่าเรียนกันเอง เฉลี่ยเริ่มต้นเพียง ฿250/คน เมื่อครบ 4 คน</li>
+                </ul>
+
+                <a href="booking.html" class="btn btn-primary btn-block">ลงทะเบียนเรียน</a>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="glass-card fade-in delay-3 bg-light">
                 <h3 class="price-title">Digital Courses</h3>
                 <p class="price-desc">คอร์สวิดีโอเรียนเอง เจาะจุดที่คุณอยากแก้ ทุกที่ ทุกเวลา</p>
 
@@ -273,6 +285,14 @@
 
                 <a href="booking.html" class="btn btn-secondary btn-block">สอบถามคอร์สวิดีโอ</a>
             </div>
+        </div>
+
+        <!-- Shared teaching-style preview (applies to every course) -->
+        <div class="course-preview fade-in">
+            <p class="course-preview-title">อยากเห็นสไตล์การสอนก่อนตัดสินใจ?</p>
+            <button class="btn btn-secondary" id="btnVideoSample">
+                <svg class="svg-icon"><use href="#ic-play"></use></svg> ดูตัวอย่างการสอน
+            </button>
         </div>
     </section>
 

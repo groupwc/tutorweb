@@ -1527,6 +1527,52 @@ summary:focus-visible {
 .glass-card.popular:hover { transform: scale(1.08) translateY(-10px); }
 @media (max-width: 768px) { .glass-card.popular { transform: scale(1); z-index: 1; } .glass-card.popular:hover { transform: translateY(-5px); } }
 
+/* Pricing cards (courses page + home pricing): same size, CTA aligned to the bottom */
+[data-page="courses"] .glass-card,
+#pricing .glass-card { display: flex; flex-direction: column; }
+[data-page="courses"] .glass-card > *:last-child,
+#pricing .glass-card > *:last-child { margin-top: auto; }
+[data-page="courses"] .glass-card.popular,
+#pricing .glass-card.popular { transform: none; }
+[data-page="courses"] .glass-card:hover,
+[data-page="courses"] .glass-card.popular:hover,
+#pricing .glass-card:hover,
+#pricing .glass-card.popular:hover { transform: translateY(-5px); }
+
+/* Shared "see teaching style" preview — applies to every course */
+.course-preview {
+  width: fit-content;
+  max-width: 100%;
+  margin: 3rem auto 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem 1.2rem;
+  text-align: center;
+  padding: 0.9rem 1.4rem;
+  background: var(--white);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 16px;
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 22px 45px -24px rgba(15, 23, 42, 0.3);
+  transition: var(--transition);
+}
+.course-preview:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 28px 55px -22px rgba(15, 23, 42, 0.35);
+}
+.course-preview-title {
+  margin: 0;
+  color: var(--primary-navy);
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
 /* --- Video Button --- */
 .btn-video { background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.4); backdrop-filter: blur(5px); margin-left: 10px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-weight: 500; }
 .btn-video:hover { background: rgba(255,255,255,0.3); color: white; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
