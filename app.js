@@ -126,7 +126,7 @@ function footerHTML() {
       <p style="color: var(--text-dark); margin-top: 0.5rem; margin-bottom: 0.5rem;">สแกน QR Code เพื่อติดต่อและจองคลาสเรียน</p>
       <img src="images/line_qr.webp" alt="LINE QR Code" class="qr-image">
       <p style="color: var(--text-light); font-size: 0.85rem; margin-bottom: 1rem;">หรือคลิกปุ่มด้านล่าง (หากใช้งานผ่านมือถือ)</p>
-      <a href="${SITE.lineUrl}" class="btn btn-primary" target="_blank" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;">
+      <a href="${SITE.lineUrl}" id="qrLineBtn" class="btn btn-primary" target="_blank" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;">
         <svg class="svg-icon"><use href="#ic-chat"></use></svg> เปิดแอป LINE
       </a>
     </div>
@@ -177,6 +177,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const fromForm = qrModal.dataset.fromForm === 'true';
       delete qrModal.dataset.fromForm;
       qrModal.classList.remove('show');
+      // คืน href ปุ่ม LINE กลับเป็นค่าเปล่า (กันข้อความ prefill จากฟอร์มค้าง)
+      const qrBtn = document.getElementById('qrLineBtn');
+      if (qrBtn) qrBtn.href = SITE.lineUrl;
       if (fromForm) showThankYou();
     };
     closeQrModal.addEventListener('click', hideQr);
@@ -188,8 +191,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Intercept all LINE links to show the modal on desktop
+  // Intercept LINE links to show the QR modal on desktop
+  // (ยกเว้นปุ่มที่อยู่ในตัว modal เอง — ไม่งั้นปุ่ม "เปิดแอป LINE" จะกดไม่ได้)
   document.querySelectorAll(`a[href^="https://line.me/"]`).forEach(link => {
+    if (link.closest('#lineQrModal')) return;
     link.addEventListener('click', showQrModal);
   });
   // Navbar shadow on scroll
@@ -200,7 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
     navbar.style.boxShadow = scrolled ? '0 4px 20px rgba(0,0,0,0.05)' : 'none';
     navbar.style.background = scrolled ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.85)';
   };
-  window.addEventListener('scroll', onScrollNav);
+  window.addEventListener('scroll', onScrollNav, { passive: true });
   onScrollNav();
 
   // Booking form → Google Sheets & LINE OA
@@ -265,6 +270,8 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
           if (window.innerWidth > 768 && document.getElementById('lineQrModal')) {
             const modal = document.getElementById('lineQrModal');
+            const qrLineBtn = document.getElementById('qrLineBtn');
+            if (qrLineBtn) qrLineBtn.href = `${SITE.lineUrl}?text=${encodeURIComponent(message)}`;
             modal.dataset.fromForm = 'true';
             modal.classList.add('show');
           } else {
@@ -351,7 +358,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (scrollTopBtn) {
     window.addEventListener('scroll', () => {
       scrollTopBtn.classList.toggle('show', window.scrollY > 400);
-    });
+    }, { passive: true });
     scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
   }
 
@@ -368,6 +375,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.body.classList.toggle('sticky-cta-visible', visible);
     };
     window.addEventListener('scroll', updateSticky, { passive: true });
+    updateSticky();
   }
 
   // Lazy YouTube (click-to-load) — keeps page fast, no redirect
