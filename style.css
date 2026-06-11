@@ -761,10 +761,11 @@ body {
 
 .faq-item {
   background: #f8f9fa;
-  border-radius: 8px; /* Slightly sharper, less bulky corners */
-  border-left: 4px solid var(--accent-green); /* Thinner accent line */
+  border-radius: 8px;
+  border-left: 4px solid var(--accent-green);
   transition: var(--transition);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.02); /* Softer shadow */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+  margin-bottom: 0.5rem;
 }
 
 .faq-item:hover {
@@ -854,10 +855,11 @@ body {
   box-shadow: 0 10px 20px rgba(0, 185, 0, 0.3);
   z-index: 1000;
   transition: all 0.3s ease;
-  animation: bounce 2s infinite;
+  animation: bounce 1s 3;
 }
 
 .floating-line-btn:hover {
+  animation-play-state: paused;
   transform: scale(1.1);
   box-shadow: 0 15px 25px rgba(0, 185, 0, 0.4);
 }
@@ -1474,4 +1476,140 @@ summary:focus-visible {
   box-shadow: 0 5px 15px rgba(0,0,0,0.08);
   margin: 1.5rem auto;
   display: block;
+}
+
+
+/* --- Premium Pricing Card --- */
+.glass-card.popular { position: relative; transform: scale(1.05); box-shadow: 0 15px 35px rgba(0,0,0,0.1), 0 0 20px rgba(76, 175, 80, 0.2); border: 2px solid var(--accent-green); z-index: 2; }
+.glass-card.popular:hover { transform: scale(1.08) translateY(-10px); }
+@media (max-width: 768px) { .glass-card.popular { transform: scale(1); z-index: 1; } .glass-card.popular:hover { transform: translateY(-5px); } }
+
+/* --- Video Button --- */
+.btn-video { background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.4); backdrop-filter: blur(5px); margin-left: 10px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-weight: 500; }
+.btn-video:hover { background: rgba(255,255,255,0.3); color: white; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+@media (max-width: 480px) { .btn-video { margin-left: 0; margin-top: 15px; width: 100%; } }
+
+/* --- Review Card Enhancement --- */
+.review-card { border-top: 4px solid var(--accent-green); display: flex; flex-direction: column; justify-content: space-between; position: relative; }
+.review-trf-placeholder { background: rgba(0,0,0,0.03); border: 1px dashed rgba(0,0,0,0.15); border-radius: 8px; padding: 1.5rem 1rem; text-align: center; margin-bottom: 1.5rem; font-size: 0.85rem; color: #888; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+.review-trf-placeholder svg { width: 30px; height: 30px; fill: #ccc; }
+
+.review-img { width: 100%; height: 180px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+
+/* ============================================
+   Thank-you toast notification
+   ============================================ */
+.toast-thankyou {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, calc(-50% + 24px));
+  background: var(--primary-navy);
+  color: white;
+  padding: 2rem 2.5rem;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  text-align: center;
+  min-width: 280px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  z-index: 3000;
+  opacity: 0;
+  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+.toast-thankyou.show {
+  opacity: 1;
+  transform: translate(-50%, -50%);
+}
+.toast-thankyou strong {
+  display: block;
+  font-size: 1.1rem;
+}
+.toast-thankyou span {
+  font-size: 0.88rem;
+  color: #94a3b8;
+  line-height: 1.5;
+}
+
+/* ============================================
+   Form success state
+   ============================================ */
+.form-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 2rem 1rem;
+  text-align: center;
+  animation: fadeDown 0.4s ease-out forwards;
+}
+.form-success h3 {
+  font-size: 1.3rem;
+  color: var(--primary-navy);
+}
+.form-success p {
+  color: var(--text-light);
+  font-size: 0.95rem;
+}
+
+/* ============================================
+   Before/After score badge on review cards
+   ============================================ */
+.score-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: 0.3rem;
+  padding: 0.2rem 0.6rem;
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--accent-green);
+  border-radius: 50px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+/* ============================================
+   Sticky mobile CTA bar
+   ============================================ */
+.sticky-mobile-cta {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.12);
+  z-index: 998;
+  transform: translateY(100%);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (max-width: 768px) {
+  .sticky-mobile-cta {
+    display: flex;
+  }
+  .sticky-mobile-cta.show {
+    transform: translateY(0);
+  }
+  .sticky-mobile-cta .btn {
+    width: 100%;
+    font-size: 1rem;
+    padding: 0.85rem;
+    text-align: center;
+  }
+  /* เลื่อนปุ่ม LINE และ scroll-top ขึ้นเมื่อ sticky bar โผล่ */
+  body.sticky-cta-visible .floating-line-btn {
+    bottom: 85px;
+  }
+  body.sticky-cta-visible .scroll-top-btn {
+    bottom: 149px;
+  }
 }

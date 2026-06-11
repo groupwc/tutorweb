@@ -19,11 +19,12 @@ const SITE = {
 // ถ้าไม่มี @ นำหน้า ถือว่าเป็น LINE ส่วนตัว ต้องใช้เครื่องหมาย ~ เพื่อให้กดแอดเพื่อนได้
 const formattedLineId = SITE.lineId.startsWith('@') ? SITE.lineId : '~' + SITE.lineId;
 SITE.lineUrl = `https://line.me/ti/p/${formattedLineId}`;
+SITE.social.line = SITE.lineUrl;
 
 /* ---------- SVG sprite (รวมทุกไอคอนไว้ที่เดียว ใช้ได้ทุกหน้า) ---------- */
 const SPRITE = `
 <svg class="svg-sprite" aria-hidden="true" focusable="false"><defs>
-<symbol id="ic-check" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></symbol>
+<symbol id="ic-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></symbol><symbol id="ic-check" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></symbol>
 <symbol id="ic-lock" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm3 11c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></symbol>
 <symbol id="ic-phone" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></symbol>
 <symbol id="ic-mail" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></symbol>
@@ -130,6 +131,13 @@ function footerHTML() {
     </div>
   </div>`;
   document.body.insertAdjacentHTML('beforeend', qrModalHTML);
+
+  if (page !== 'booking') {
+    document.body.insertAdjacentHTML('beforeend', `
+      <div class="sticky-mobile-cta" id="stickyCta">
+        <a href="booking.html" class="btn btn-primary">จองคลาสทดลองตอนนี้</a>
+      </div>`);
+  }
 })();
 
 /* ---------- Behaviours ---------- */
@@ -146,10 +154,36 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
+  function showThankYou() {
+    const toast = document.createElement('div');
+    toast.className = 'toast-thankyou';
+    toast.innerHTML = `
+      <svg class="svg-icon" style="width:22px;height:22px;color:var(--accent-green);flex-shrink:0"><use href="#ic-check"></use></svg>
+      <div>
+        <strong>ขอบคุณที่ลงทะเบียน!</strong>
+        <span>เราจะติดต่อกลับผ่าน LINE ภายใน 24 ชั่วโมงครับ</span>
+      </div>`;
+    document.body.appendChild(toast);
+    requestAnimationFrame(() => requestAnimationFrame(() => toast.classList.add('show')));
+    setTimeout(() => {
+      toast.classList.remove('show');
+      setTimeout(() => toast.remove(), 400);
+    }, 4000);
+  }
+
   if (qrModal && closeQrModal) {
-    closeQrModal.addEventListener('click', () => qrModal.classList.remove('show'));
+    const hideQr = () => {
+      const fromForm = qrModal.dataset.fromForm === 'true';
+      delete qrModal.dataset.fromForm;
+      qrModal.classList.remove('show');
+      if (fromForm) showThankYou();
+    };
+    closeQrModal.addEventListener('click', hideQr);
     qrModal.addEventListener('click', (e) => {
-      if (e.target === qrModal) qrModal.classList.remove('show');
+      if (e.target === qrModal) hideQr();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && qrModal.classList.contains('show')) hideQr();
     });
   }
 
@@ -196,8 +230,8 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // ถ้าใส่ URL แล้ว ให้ยิงข้อมูลไปเก็บที่ Sheet
         if (GOOGLE_SCRIPT_URL !== 'YOUR_GOOGLE_SCRIPT_WEB_APP_URL_HERE') {
-          // ใช้โหมด no-cors และ text/plain เพื่อป้องกันปัญหา CORS Policy ของ Browser
-          await fetch(GOOGLE_SCRIPT_URL, {
+          // fire-and-forget — ไม่รอ response เพื่อไม่ให้ UX ช้า
+          fetch(GOOGLE_SCRIPT_URL, {
             method: 'POST',
             mode: 'no-cors',
             body: JSON.stringify(data),
@@ -209,25 +243,39 @@ document.addEventListener('DOMContentLoaded', () => {
       } catch (error) {
         console.error('Error saving to Google Sheets:', error);
       } finally {
-        // คืนค่าปุ่มกลับเป็นเหมือนเดิม
-        submitBtn.innerHTML = originalText;
-        submitBtn.style.opacity = '1';
-        submitBtn.style.pointerEvents = 'auto';
-
-        // สร้างข้อความ (ถ้าใช้ LINE OA ถึงจะพ่วงข้อความไปได้)
         const message =
           `สวัสดีครับ/ค่ะ สนใจจองคลาสเรียน\n\n` +
           `ชื่อ-นามสกุล: ${data.firstname} ${data.lastname}\n` +
           `อีเมล: ${data.email}\nLINE ID: ${data.lineid}\n` +
           `เป้าหมาย: ${data.target}\nคอร์สที่สนใจ: ${data.course}\n\n` +
           `รบกวนเช็คคิวว่างให้หน่อยครับ/ค่ะ`;
-          
-        // ถ้าใช้คอมพิวเตอร์ ให้เด้ง Modal โชว์ QR Code ถ้าใช้มือถือให้เปิดแอป LINE
-        if (window.innerWidth > 768 && document.getElementById('lineQrModal')) {
-          document.getElementById('lineQrModal').classList.add('show');
-        } else {
-          window.open(`${SITE.lineUrl}?text=${encodeURIComponent(message)}`, '_blank');
-        }
+
+        // แสดง success state แทนปุ่ม
+        submitBtn.style.display = 'none';
+        const successEl = document.createElement('div');
+        successEl.className = 'form-success';
+        successEl.innerHTML = `
+          <svg class="svg-icon" style="width:52px;height:52px;color:var(--accent-green)"><use href="#ic-check"></use></svg>
+          <h3>ส่งข้อมูลเรียบร้อยแล้ว!</h3>
+          <p>กำลังพาคุณไปยัง LINE เพื่อนัดเวลาและยืนยันการจอง...</p>`;
+        submitBtn.insertAdjacentElement('afterend', successEl);
+
+        // เปิด LINE หลัง 0.8 วินาที แล้วคืนฟอร์มกลับ
+        setTimeout(() => {
+          if (window.innerWidth > 768 && document.getElementById('lineQrModal')) {
+            const modal = document.getElementById('lineQrModal');
+            modal.dataset.fromForm = 'true';
+            modal.classList.add('show');
+          } else {
+            window.open(`${SITE.lineUrl}?text=${encodeURIComponent(message)}`, '_blank');
+            showThankYou();
+          }
+          successEl.remove();
+          submitBtn.style.display = '';
+          submitBtn.innerHTML = originalText;
+          submitBtn.style.opacity = '1';
+          submitBtn.style.pointerEvents = 'auto';
+        }, 500);
       }
     });
   }
@@ -306,6 +354,21 @@ document.addEventListener('DOMContentLoaded', () => {
     scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
   }
 
+  // Sticky mobile CTA
+  const stickyCta = document.getElementById('stickyCta');
+  if (stickyCta) {
+    const heroBtns = document.querySelector('.hero-buttons');
+    const updateSticky = () => {
+      if (window.innerWidth > 768) return;
+      const visible = heroBtns
+        ? heroBtns.getBoundingClientRect().bottom < 0
+        : window.scrollY > 300;
+      stickyCta.classList.toggle('show', visible);
+      document.body.classList.toggle('sticky-cta-visible', visible);
+    };
+    window.addEventListener('scroll', updateSticky, { passive: true });
+  }
+
   // Lazy YouTube (click-to-load) — keeps page fast, no redirect
   document.querySelectorAll('.video-wrapper[data-yt]').forEach(wrap => {
     const load = () => {
@@ -325,6 +388,40 @@ document.addEventListener('DOMContentLoaded', () => {
     wrap.addEventListener('click', load);
     wrap.addEventListener('keydown', e => {
       if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); load(); }
+    });
+  });
+});
+
+
+// Video Modal
+document.addEventListener('DOMContentLoaded', () => {
+  const btn = document.getElementById('btnVideoSample');
+  if (!btn) return;
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    const modalHtml = `
+      <div id="videoModal" class="modal" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; z-index: 2000; background: rgba(0,0,0,0.9);">
+          <div class="modal-content" style="position: relative; width: 90%; max-width: 400px; height: 80vh; max-height: 700px; background: transparent; box-shadow: none; padding: 0;">
+              <span class="close-modal" id="closeVideoModal" style="position: absolute; right: 0; top: -40px; color: white; font-size: 35px; cursor: pointer;">&times;</span>
+              <iframe src="https://www.tiktok.com/embed/v2/7554663237850074375" style="width:100%; height:100%; border:none; border-radius: 15px; box-shadow: 0 15px 35px rgba(0,0,0,0.5);" allow="encrypted-media;" allowfullscreen></iframe>
+          </div>
+      </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', modalHtml);
+    
+    const modal = document.getElementById('videoModal');
+    const closeBtn = document.getElementById('closeVideoModal');
+    
+    function close() {
+      document.removeEventListener('keydown', onEsc);
+      modal.remove();
+    }
+    const onEsc = (e) => { if (e.key === 'Escape') close(); };
+    document.addEventListener('keydown', onEsc);
+
+    closeBtn.addEventListener('click', close);
+    modal.addEventListener('click', (ev) => {
+        if (ev.target === modal) close();
     });
   });
 });
