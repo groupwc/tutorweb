@@ -5,9 +5,9 @@
 const SITE = {
   brand: 'Tutor P',
   // ↓↓↓ แก้ข้อมูลจริงตรงนี้ที่เดียว ↓↓↓
-  lineId: '@YOUR_LINE_ID',                 // เช่น @tutorp
-  phone: '08X-XXX-XXXX',
-  email: 'contact@yourdomain.com',
+  lineId: 'groupwc',                 // เช่น @tutorp
+  phone: '089-182-4745',
+  email: 'chaiwat.wyn@gmail.com',
   social: {
     facebook: '#',
     line: '#',
@@ -15,7 +15,10 @@ const SITE = {
     tiktok: '#',
   },
 };
-SITE.lineUrl = `https://line.me/R/ti/p/${encodeURIComponent(SITE.lineId)}`;
+
+// ถ้าไม่มี @ นำหน้า ถือว่าเป็น LINE ส่วนตัว ต้องใช้เครื่องหมาย ~ เพื่อให้กดแอดเพื่อนได้
+const formattedLineId = SITE.lineId.startsWith('@') ? SITE.lineId : '~' + SITE.lineId;
+SITE.lineUrl = `https://line.me/ti/p/${formattedLineId}`;
 
 /* ---------- SVG sprite (รวมทุกไอคอนไว้ที่เดียว ใช้ได้ทุกหน้า) ---------- */
 const SPRITE = `
@@ -112,10 +115,48 @@ function footerHTML() {
   const page = document.body.dataset.page || '';
   document.body.insertAdjacentHTML('afterbegin', SPRITE + navbarHTML(page));
   document.body.insertAdjacentHTML('beforeend', footerHTML());
+
+  const qrModalHTML = `
+  <div id="lineQrModal" class="modal-overlay">
+    <div class="modal-content">
+      <button class="modal-close" id="closeQrModal" aria-label="Close">&times;</button>
+      <h3 style="color: var(--primary-navy); font-size: 1.5rem;">เพิ่มเพื่อนทาง LINE</h3>
+      <p style="color: var(--text-dark); margin-top: 0.5rem; margin-bottom: 0.5rem;">สแกน QR Code เพื่อติดต่อและจองคลาสเรียน</p>
+      <img src="images/line_qr.webp" alt="LINE QR Code" class="qr-image">
+      <p style="color: var(--text-light); font-size: 0.85rem; margin-bottom: 1rem;">หรือคลิกปุ่มด้านล่าง (หากใช้งานผ่านมือถือ)</p>
+      <a href="${SITE.lineUrl}" class="btn btn-primary" target="_blank" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;">
+        <svg class="svg-icon"><use href="#ic-chat"></use></svg> เปิดแอป LINE
+      </a>
+    </div>
+  </div>`;
+  document.body.insertAdjacentHTML('beforeend', qrModalHTML);
 })();
 
 /* ---------- Behaviours ---------- */
 document.addEventListener('DOMContentLoaded', () => {
+  // QR Modal Logic
+  const qrModal = document.getElementById('lineQrModal');
+  const closeQrModal = document.getElementById('closeQrModal');
+
+  const showQrModal = (e) => {
+    // Show modal only on desktop, let links work normally on mobile
+    if (window.innerWidth > 768) {
+      e.preventDefault();
+      qrModal.classList.add('show');
+    }
+  };
+
+  if (qrModal && closeQrModal) {
+    closeQrModal.addEventListener('click', () => qrModal.classList.remove('show'));
+    qrModal.addEventListener('click', (e) => {
+      if (e.target === qrModal) qrModal.classList.remove('show');
+    });
+  }
+
+  // Intercept all LINE links to show the modal on desktop
+  document.querySelectorAll(`a[href^="https://line.me/"]`).forEach(link => {
+    link.addEventListener('click', showQrModal);
+  });
   // Navbar shadow on scroll
   const navbar = document.querySelector('.navbar');
   const onScrollNav = () => {
@@ -127,19 +168,67 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('scroll', onScrollNav);
   onScrollNav();
 
-  // Booking form → LINE OA
+  // Booking form → Google Sheets & LINE OA
   const bookingForm = document.getElementById('bookingForm');
   if (bookingForm) {
-    bookingForm.addEventListener('submit', (e) => {
+    bookingForm.addEventListener('submit', async (e) => {
       e.preventDefault();
+      
+      const submitBtn = bookingForm.querySelector('button[type="submit"]');
+      const originalText = submitBtn.innerHTML;
+      submitBtn.innerHTML = '<svg class="svg-icon"><use href="#ic-chat"></use></svg> กำลังส่งข้อมูล...';
+      submitBtn.style.opacity = '0.7';
+      submitBtn.style.pointerEvents = 'none';
+
       const v = id => document.getElementById(id)?.value || '';
-      const message =
-        `สวัสดีครับ/ค่ะ สนใจจองคลาสเรียน\n\n` +
-        `ชื่อ-นามสกุล: ${v('firstname')} ${v('lastname')}\n` +
-        `อีเมล: ${v('email')}\nLINE ID: ${v('lineid')}\n` +
-        `เป้าหมาย: ${v('target')}\nคอร์สที่สนใจ: ${v('course')}\n\n` +
-        `รบกวนเช็คคิวว่างให้หน่อยครับ/ค่ะ`;
-      window.open(`${SITE.lineUrl}?text=${encodeURIComponent(message)}`, '_blank');
+      const data = {
+        firstname: v('firstname'),
+        lastname: v('lastname'),
+        email: v('email'),
+        lineid: v('lineid'),
+        target: v('target'),
+        course: v('course')
+      };
+
+      try {
+        // --- ส่วนที่ต้องนำ URL จาก Google Apps Script มาใส่ ---
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbysB14Jjr7LUQhIWTxPnJwVGmPz5SzfUNDPHx8O1aiKO3FQ-c9DYYO_4dWJ7ZejFECs/exec';
+        
+        // ถ้าใส่ URL แล้ว ให้ยิงข้อมูลไปเก็บที่ Sheet
+        if (GOOGLE_SCRIPT_URL !== 'YOUR_GOOGLE_SCRIPT_WEB_APP_URL_HERE') {
+          // ใช้โหมด no-cors และ text/plain เพื่อป้องกันปัญหา CORS Policy ของ Browser
+          await fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            body: JSON.stringify(data),
+            headers: {
+              'Content-Type': 'text/plain;charset=utf-8',
+            }
+          });
+        }
+      } catch (error) {
+        console.error('Error saving to Google Sheets:', error);
+      } finally {
+        // คืนค่าปุ่มกลับเป็นเหมือนเดิม
+        submitBtn.innerHTML = originalText;
+        submitBtn.style.opacity = '1';
+        submitBtn.style.pointerEvents = 'auto';
+
+        // สร้างข้อความ (ถ้าใช้ LINE OA ถึงจะพ่วงข้อความไปได้)
+        const message =
+          `สวัสดีครับ/ค่ะ สนใจจองคลาสเรียน\n\n` +
+          `ชื่อ-นามสกุล: ${data.firstname} ${data.lastname}\n` +
+          `อีเมล: ${data.email}\nLINE ID: ${data.lineid}\n` +
+          `เป้าหมาย: ${data.target}\nคอร์สที่สนใจ: ${data.course}\n\n` +
+          `รบกวนเช็คคิวว่างให้หน่อยครับ/ค่ะ`;
+          
+        // ถ้าใช้คอมพิวเตอร์ ให้เด้ง Modal โชว์ QR Code ถ้าใช้มือถือให้เปิดแอป LINE
+        if (window.innerWidth > 768 && document.getElementById('lineQrModal')) {
+          document.getElementById('lineQrModal').classList.add('show');
+        } else {
+          window.open(`${SITE.lineUrl}?text=${encodeURIComponent(message)}`, '_blank');
+        }
+      }
     });
   }
 
