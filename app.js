@@ -60,7 +60,7 @@ function navbarHTML(page) {
     <div class="hamburger"><span></span><span></span><span></span></div>
     <div class="nav-links">
       ${items}
-      <a href="booking.html" class="btn btn-primary nav-btn${bookingActive}">จองคลาสทดลอง</a>
+      <a href="booking.html" class="btn btn-primary nav-btn${bookingActive}">ลงทะเบียนเรียน</a>
     </div>
   </nav>`;
 }
@@ -135,7 +135,7 @@ function footerHTML() {
   if (page !== 'booking') {
     document.body.insertAdjacentHTML('beforeend', `
       <div class="sticky-mobile-cta" id="stickyCta">
-        <a href="booking.html" class="btn btn-primary">จองคลาสทดลองตอนนี้</a>
+        <a href="booking.html" class="btn btn-primary">ลงทะเบียนเรียน</a>
       </div>`);
   }
 })();
